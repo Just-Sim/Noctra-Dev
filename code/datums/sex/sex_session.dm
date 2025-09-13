@@ -119,9 +119,9 @@
 	action.on_start(user, target)
 
 	while(TRUE)
-		/*if(isnull(target.client))
+		if(isnull(target.client))
 			break
-		*/
+
 		var/stamina_cost = action.stamina_cost * get_stamina_cost_multiplier()
 		if(!user.adjust_stamina(-stamina_cost))
 			break
@@ -141,7 +141,7 @@
 
 		action.on_perform(user, target)
 
-		if(user.has_kink(KINK_VISUAL_EFFECTS))
+		if(user.has_kink(KINK_VISUAL_EFFECTS)) //Hearts played on action that can be turned off at will
 			action.show_sex_effects(user)
 
 		if(action.is_finished(user, target))
