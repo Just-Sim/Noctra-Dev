@@ -42,6 +42,9 @@
 	playsound(target, 'sound/misc/mat/segso.ogg', 50, TRUE, -2, ignore_walls = FALSE)
 	do_thrust_animate(user, target)
 
+	if(user.has_kink(KINK_ONOMATOPOEIA))
+		do_onomatopoeia(user)
+
 	if(sex_session.considered_limp(target))
 		sex_session.perform_sex_action(target, 1.2, 3, TRUE)
 	else

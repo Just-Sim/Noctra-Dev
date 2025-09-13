@@ -141,6 +141,9 @@
 
 		action.on_perform(user, target)
 
+		if(user.has_kink(KINK_VISUAL_EFFECTS))
+			action.show_sex_effects(user)
+
 		if(action.is_finished(user, target))
 			break
 		if(!action.continous)
@@ -1138,3 +1141,6 @@
 	)
 
 	return SM.set_data(save_name, "partner_notes", all_notes)
+
+
+
