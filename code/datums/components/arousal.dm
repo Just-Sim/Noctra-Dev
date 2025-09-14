@@ -268,14 +268,14 @@
 				chosen_emote = "groan"
 		else
 			if(prob(40))
-				chosen_emote = "moan"
+				chosen_emote = "painmoan"
 	if(pain_amt >= PAIN_MED_EFFECT)
 		if(giving)
 			if(prob(50))
 				chosen_emote = "groan"
 		else
 			if(prob(60))
-				chosen_emote = "moan"
+				chosen_emote = "painmoan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
