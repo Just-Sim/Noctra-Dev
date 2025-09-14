@@ -313,6 +313,13 @@
 		if(SEX_FORCE_EXTREME)
 			return "<span class='love_extreme'>[string]</span>"
 
+/datum/sex_session/proc/get_force_sound()
+	switch(force)
+		if(SEX_FORCE_LOW, SEX_FORCE_MID)
+			return pick(SEX_SOUNDS_SLOW)
+		if(SEX_FORCE_HIGH, SEX_FORCE_EXTREME)
+			return pick(SEX_SOUNDS_HARD)
+
 /datum/sex_session/proc/show_ui(selected_tab = "interactions")
 	var/list/dat = list()
 	var/list/arousal_data = list()

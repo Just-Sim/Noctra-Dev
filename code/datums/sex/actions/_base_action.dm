@@ -317,3 +317,4 @@
 			new /obj/effect/temp_visual/heart/sex_effects(get_turf(user))
 		else
 			new /obj/effect/temp_visual/heart/sex_effects/red_heart(get_turf(user))
+

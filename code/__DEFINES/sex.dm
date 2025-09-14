@@ -203,3 +203,20 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define SUBTLE_ALL (1 << 1)
 #define SUBTLE_NOGHOST (1 << 2)
 #define SUBTLE_SHORT (1 << 3)
+
+#define SEX_SOUNDS_SLOW list(\
+	"sound/misc/mat/sex_clap/slow/SexSlap14.ogg",\
+	"sound/misc/mat/sex_clap/slow/SexSlap20.ogg",\
+	"sound/misc/mat/sex_clap/slow/SexSlap21.ogg",\
+	"sound/misc/mat/sex_clap/slow/SexSlap23.ogg",\
+	"sound/misc/mat/sex_clap/slow/SexSlap34.ogg",\
+	)
+
+#define SEX_SOUNDS_HARD list(\
+	"sound/misc/mat/sex_clap/hard/SexSmack17.ogg",\
+	"sound/misc/mat/sex_clap/hard/SexSmack18.ogg",\
+	"sound/misc/mat/sex_clap/hard/SexSmack20.ogg",\
+	"sound/misc/mat/sex_clap/hard/SexSmack21.ogg",\
+	"sound/misc/mat/sex_clap/hard/SexSmack24.ogg",\
+	"sound/misc/mat/sex_clap/hard/SexSmack26.ogg",\
+	)

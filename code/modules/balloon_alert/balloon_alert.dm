@@ -65,7 +65,7 @@
 
 	animate(
 		balloon_alert,
-		pixel_y = (world.icon_size * 1.2) + y_offset,
+		pixel_y = anim_y_offset,
 		time = BALLOON_TEXT_TOTAL_LIFETIME(length_mult),
 		easing = SINE_EASING | EASE_OUT,
 	)
