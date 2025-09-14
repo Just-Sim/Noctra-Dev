@@ -167,7 +167,7 @@
 	charge = max(0, charge - CHARGE_FOR_CLIMAX)
 
 	user.add_stress(/datum/stressevent/cumok)
-	user.emote("sexmoanhvy", forced = TRUE)
+	user.emote("moan", forced = TRUE)
 	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
 	last_ejaculation_time = world.time
 
@@ -258,9 +258,9 @@
 	var/chosen_emote
 	switch(arousal_amt)
 		if(0 to 5)
-			chosen_emote = "sexmoanlight"
+			chosen_emote = "moan"
 		if(5 to INFINITY)
-			chosen_emote = "sexmoanhvy"
+			chosen_emote = "moan"
 
 	if(pain_amt >= PAIN_MILD_EFFECT)
 		if(giving)
@@ -268,14 +268,14 @@
 				chosen_emote = "groan"
 		else
 			if(prob(40))
-				chosen_emote = "painmoan"
+				chosen_emote = "moan"
 	if(pain_amt >= PAIN_MED_EFFECT)
 		if(giving)
 			if(prob(50))
 				chosen_emote = "groan"
 		else
 			if(prob(60))
-				chosen_emote = "painmoan"
+				chosen_emote = "moan"
 
 	last_moan = world.time
 	user.emote(chosen_emote, forced = TRUE)
