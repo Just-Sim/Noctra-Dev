@@ -125,7 +125,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/flavortext
 
 	/// The species this character is.
-	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
+	var/datum/species/pref_species = new /datum/species/human/northern() //Mutant race
 	/// The patron/god/diety this character worships
 	var/datum/patron/selected_patron
 	/// The default patron to use if none is selected
@@ -213,6 +213,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/selected_accent = ACCENT_DEFAULT
 	/// If our owner has patreon access
 	var/patreon = FALSE
+	/// If our owner is from a race that has more than one accent
+	var/change_accent = FALSE
 
 	/// If the user clicked "Don't ask again" on the randomize character prompt
 	var/randomize_shutup = FALSE
@@ -576,10 +578,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 				if(job.whitelist_req && (!user.client.whitelisted()))
 					HTML += "<font color=#6183a5>[used_name]</font></td> <td> </td></tr>"
 					continue
-
+			#ifdef USES_PQ
 			if(get_playerquality(user.ckey) < job.min_pq)
 				HTML += "<font color=#a36c63>[used_name] (Min PQ: [job.min_pq])</font></td> <td> </td></tr>"
 				continue
+			#endif
 			if(length(job.allowed_ages) && !(user.client.prefs.age in job.allowed_ages))
 				HTML += "<font color=#a36c63>[used_name]</font></td> <td> </td></tr>"
 				continue
@@ -1189,9 +1192,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						voice_color = sanitize_hexcolor(new_voice)
 
 				if("headshot")
-					if(!patreon)
-						to_chat(user, "This is a patreon exclusive feature, your headshot link will be applied but others will only be able to view it if you are a patreon supporter.")
-
 					to_chat(user, "<span class='notice'>Please use an image of the head and shoulder area to maintain immersion level. Lastly, ["<span class='bold'>do not use a real life photo or use any image that is less than serious.</span>"]</span>")
 					to_chat(user, "<span class='notice'>If the photo doesn't show up properly in-game, ensure that it's a direct image link that opens properly in a browser.</span>")
 					to_chat(user, "<span class='notice'>Keep in mind that the photo will be downsized to 325x325 pixels, so the more square the photo, the better it will look.</span>")
@@ -1207,8 +1207,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					log_game("[user] has set their Headshot image to '[headshot_link]'.")
 
 				if("species")
+					selected_accent = ACCENT_DEFAULT
 					var/list/selectable = get_selectable_species(patreon)
-
 					var/result = browser_input_list(user, "SELECT YOUR HERO'S PEOPLE:", "VANDERLIN FAUNA", selectable, pref_species)
 
 					if(result)
@@ -1247,8 +1247,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							to_chat(user, "<span class='info'>[charflaw.desc]</span>")
 
 				if("flavortext")
-					to_chat(user, "<span class='notice'>["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts.</span>"]</span>")
-					var/new_flavortext = input(user, "Input your character description:", "Flavortext", flavortext) as message|null
+					to_chat(user, "<span class='notice'>["<span class='bold'>Flavortext should not include nonphysical nonsensory attributes such as backstory or the character's internal thoughts. NSFW descriptions are prohibited.</span>"]</span>")
+					var/new_flavortext = browser_input_text(user, "Input your character description", "DESCRIBE YOURSELF", flavortext, multiline = TRUE)
 					if(new_flavortext == null)
 						return
 					if(new_flavortext == "")
@@ -1266,13 +1266,23 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						skin_tone = listy[new_s_tone]
 
 				if("selected_accent")
-					if(!patreon)
-						to_chat(user, "Sorry this is a patreon exclusive feature.")
+					if(length(pref_species.multiple_accents))
+						change_accent = TRUE
+					else
+						change_accent = FALSE
+					if(!patreon && !change_accent)
+						to_chat(user, "Sorry, this option is Patreon-exclusive or unavailable to your race.")
+						selected_accent = ACCENT_DEFAULT
 						return
-					var/accent = browser_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", GLOB.accent_list, selected_accent)
-					if(accent)
-						selected_accent = accent
-
+					var/accent
+					if(patreon)
+						accent = browser_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", GLOB.accent_list, selected_accent)
+						if(accent)
+							selected_accent = accent
+					else if(change_accent)
+						accent = browser_input_list(user, "CHOOSE YOUR HERO'S ACCENT", "VOICE OF THE WORLD", pref_species.multiple_accents, selected_accent)
+						if(accent)
+							selected_accent = pref_species.multiple_accents[accent]
 				if("ooccolor")
 					var/new_ooccolor = input(user, "Choose your OOC colour:", "Game Preference", ooccolor) as color|null
 					if(new_ooccolor)
@@ -1443,13 +1453,16 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						user.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
 				if("ghost_ears")
-					chat_toggles ^= CHAT_GHOSTEARS
+					if(user.client?.holder)
+						chat_toggles ^= CHAT_GHOSTEARS
 
 				if("ghost_sight")
-					chat_toggles ^= CHAT_GHOSTSIGHT
+					if(user.client?.holder)
+						chat_toggles ^= CHAT_GHOSTSIGHT
 
 				if("ghost_whispers")
-					chat_toggles ^= CHAT_GHOSTWHISPER
+					if(user.client?.holder)
+						chat_toggles ^= CHAT_GHOSTWHISPER
 
 				if("ghost_radio")
 					chat_toggles ^= CHAT_GHOSTRADIO
@@ -1518,16 +1531,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
 
-				if("migrants")
-					migrant.show_ui()
-					return
-
 				if("loreprimer")
 					LorePopup(user)
-
-				if("manifest")
-					parent.view_actors_manifest()
-					return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window
@@ -1553,6 +1558,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					load_character()
 
 				if("changeslot")
+					selected_accent = ACCENT_DEFAULT
 					var/list/choices = list()
 					if(path)
 						var/savefile/S = new /savefile(path)
@@ -1691,8 +1697,16 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		if(is_misc_banned(parent.ckey, BAN_MISC_PUNISHMENT_CURSE))
 			ADD_TRAIT(character, TRAIT_PUNISHMENT_CURSE, TRAIT_BAN_PUNISHMENT)
 
-		if(patreon)
-			character.accent = selected_accent
+	if(pref_species.multiple_accents && length(pref_species.multiple_accents))
+		change_accent = TRUE
+	else
+		change_accent = FALSE
+
+	if(patreon)
+		character.accent = selected_accent
+	if(change_accent && !patreon)
+		character.accent = selected_accent
+		change_accent = FALSE
 
 	/* :V */
 	apply_character_kinks(character)
