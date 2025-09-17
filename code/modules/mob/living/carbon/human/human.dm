@@ -705,6 +705,7 @@
 	voice_pitch = target.voice_pitch
 	detail_color = target.detail_color
 	skin_tone = target.skin_tone
+	custom_skin_color = target.custom_skin_color
 	lip_style = target.lip_style
 	lip_color = target.lip_color
 	age = target.age

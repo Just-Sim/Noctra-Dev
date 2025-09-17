@@ -105,7 +105,7 @@ GLOBAL_LIST_INIT(oldhc, sortList(list(
 	"white - mythic" = "f4f4f4"
 	)))
 
-/proc/skintone2hex(skin_tone)
+/proc/skintone2hex(skin_tone, custom_color = null)
 	. = 0
 	switch(skin_tone)
 		if("caucasian1")
@@ -140,6 +140,11 @@ GLOBAL_LIST_INIT(oldhc, sortList(list(
 			. = "fcccb3"
 		if("skin3")
 			. = "e8b59b"
+		if(SKIN_COLOR_CUSTOM)
+			if(custom_color)
+				. = copytext(custom_color, 2) // Remove the # prefix
+			else
+				. = "ffe0d1" // Default fallback
 
 /proc/haircolor2hex(haircolor)
 	. = 0

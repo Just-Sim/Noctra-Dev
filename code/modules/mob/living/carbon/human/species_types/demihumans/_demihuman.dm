@@ -119,6 +119,7 @@
 		/datum/customizer/organ/ears/demihuman,
 		/datum/customizer/organ/horns/demihuman,
 		/datum/customizer/organ/tail/demihuman,
+		/datum/customizer/organ/snout/anthro,
 		/datum/customizer/organ/genitals/penis/human,
 		/datum/customizer/organ/genitals/vagina/human,
 		/datum/customizer/organ/genitals/breasts/human,
@@ -189,7 +190,7 @@
 	C.remove_language(/datum/language/beast)
 
 /datum/species/demihuman/get_skin_list()
-	return sortList(list(
+	var/list/return_value = sortList(list(
 		"Ice Cap" = SKIN_COLOR_ICECAP, // - (Pale)
 		"Arctic" = SKIN_COLOR_ARCTIC, // - (White 1)
 		"Tundra" = SKIN_COLOR_TUNDRA, // - (White 2)
@@ -202,3 +203,6 @@
 		"Desert" = SKIN_COLOR_DESERT, //  - (Middle-east)
 		"Crimson Lands" = SKIN_COLOR_CRIMSONLANDS, // - (Black)
 	))
+
+	return_value += list("Custom" = SKIN_COLOR_CUSTOM)
+	return return_value

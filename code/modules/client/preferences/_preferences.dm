@@ -66,6 +66,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	var/uses_glasses_colour = 0
 
+	/// Whether to update the mutant colors when the preferences are saved
+	var/update_anthro_colors = TRUE
+
 	//character preferences
 	/// Keeps track of round-to-round randomization of the character slot, prevents overwriting.
 	var/slot_randomized
@@ -108,6 +111,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	/// Skin color.
 	var/skin_tone = "caucasian1"
+
+	/// Custom skin color (used when skin_tone is "Custom").
+	var/custom_skin_color = "#ffe0d1"
 
 	/// Eye color.
 	var/eye_color = "000"
@@ -414,6 +420,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	//-----------START OF BODY TABLE-----------
 	dat += "<table width='100%'><tr><td width='1%' valign='top'>"
+	if(CUSTOMSKINCOLOR in pref_species.species_traits)
+		dat += "<b>Update feature colors with changes:</b> <a href='?_src_=prefs;preference=update_anthro_colors;task=input'>[update_anthro_colors ? "Yes" : "No"]</a><BR>"
 
 	var/use_skintones = pref_species.use_skintones
 	if(use_skintones)
@@ -1236,6 +1244,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						randomize_all_customizer_accessories()
 						accessory = "Nothing"
 
+				if("update_anthro_colors")
+					update_anthro_colors = !update_anthro_colors
+
 				if("charflaw")
 					var/list/flawslist = GLOB.character_flaws.Copy()
 					var/result = browser_input_list(user, "SELECT YOUR HERO'S FLAW", "PERFECTION IS IMPOSSIBLE", flawslist, FALSE)
@@ -1264,6 +1275,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					var/new_s_tone = browser_input_list(user, "CHOOSE YOUR HERO'S [uppertext(pref_species.skin_tone_wording)]", "THE SUN", listy)
 					if(new_s_tone)
 						skin_tone = listy[new_s_tone]
+						// If custom is selected, show color picker
+						if(skin_tone == SKIN_COLOR_CUSTOM)
+							var/new_custom_color = color_pick_sanitized_lumi(user, "Choose your custom skin color:", "Custom Skin Color", custom_skin_color)
+							if(new_custom_color)
+								custom_skin_color = new_custom_color // sanitize_hexcolor is done in the color_pick_sanitized_lumi proc so we ballin
+								try_update_anthro_colors()
 
 				if("selected_accent")
 					if(length(pref_species.multiple_accents))
@@ -1645,6 +1662,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		organ_eyes.old_eye_color = eye_color
 
 	character.skin_tone = skin_tone
+	character.custom_skin_color = custom_skin_color
 	character.underwear = underwear
 	character.undershirt = undershirt
 	character.detail = detail
@@ -1848,3 +1866,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	return TRUE
 
+/datum/preferences/proc/try_update_anthro_colors()
+	if(update_anthro_colors)
+		reset_body_marking_colors()
+		reset_all_customizer_accessory_colors()

@@ -279,6 +279,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["eye_color"] >> eye_color
 	S["voice_color"] >> voice_color
 	S["skin_tone"] >> skin_tone
+	S["custom_skin_color"] >> custom_skin_color
 	S["underwear"] >> underwear
 	S["accessory"] >> accessory
 	S["detail"] >> detail
@@ -431,6 +432,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["eye_color"]			, eye_color)
 	WRITE_FILE(S["voice_color"]			, voice_color)
 	WRITE_FILE(S["skin_tone"]			, skin_tone)
+	WRITE_FILE(S["custom_skin_color"]	, custom_skin_color)
 	WRITE_FILE(S["underwear"]			, underwear)
 	WRITE_FILE(S["underwear_color"]		, underwear_color)
 	WRITE_FILE(S["undershirt"]			, undershirt)

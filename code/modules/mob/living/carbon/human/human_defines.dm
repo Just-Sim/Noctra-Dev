@@ -27,6 +27,9 @@
 
 	var/skin_tone = "caucasian1"	//Skin tone
 
+	/// Custom skin color (used when skin_tone is "Custom").
+	var/custom_skin_color = "#ffe0d1"
+
 	var/lip_style = null	//no lipstick by default- arguably misleading, as it could be used for general makeup
 	var/lip_color = "white"
 
