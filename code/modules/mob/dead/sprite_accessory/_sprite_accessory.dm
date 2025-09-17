@@ -278,7 +278,13 @@
 /proc/color_key_source_list_from_prefs(datum/preferences/prefs)
 	if(istype(prefs))
 		var/list/sources = list()
-		sources[KEY_SKIN_COLOR] = skintone2hex(prefs.skin_tone, prefs.custom_skin_color)
+		if(MUTCOLOR in prefs.pref_species.species_traits)
+			sources[KEY_SKIN_COLOR] = prefs.custom_skin_color
+			sources[KEY_MUT_COLOR_ONE] = prefs.custom_skin_color
+			sources[KEY_MUT_COLOR_TWO] = prefs.custom_skin_color
+			sources[KEY_MUT_COLOR_THREE] = prefs.custom_skin_color
+		else
+			sources[KEY_SKIN_COLOR] = prefs.skin_tone
 		sources[KEY_EYE_COLOR] = prefs.get_eye_color()
 		sources[KEY_HAIR_COLOR] = prefs.get_hair_color()
 		sources[KEY_FACE_HAIR_COLOR] = prefs.get_facial_hair_color()
@@ -296,7 +302,13 @@
 	/// Read specific organ DNA entries to deduce eye, hair and facial hair color
 	if(ishuman(carbon))
 		var/mob/living/carbon/human/human = carbon
-		sources[KEY_SKIN_COLOR] = skintone2hex(human.skin_tone, human.custom_skin_color)
+		if(MUTCOLOR in human.dna.species.species_traits)
+			sources[KEY_SKIN_COLOR] = human.custom_skin_color
+			sources[KEY_MUT_COLOR_ONE] = human.custom_skin_color
+			sources[KEY_MUT_COLOR_TWO] = human.custom_skin_color
+			sources[KEY_MUT_COLOR_THREE] = human.custom_skin_color
+		else
+			sources[KEY_SKIN_COLOR] = human.skin_tone
 		sources[KEY_EYE_COLOR] = human.get_eye_color()
 		sources[KEY_HAIR_COLOR] = human.get_hair_color()
 		sources[KEY_FACE_HAIR_COLOR] = human.get_facial_hair_color()

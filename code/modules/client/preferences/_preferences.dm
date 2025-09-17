@@ -420,9 +420,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	//-----------START OF BODY TABLE-----------
 	dat += "<table width='100%'><tr><td width='1%' valign='top'>"
-	if(CUSTOMSKINCOLOR in pref_species.species_traits)
-		dat += "<b>Update feature colors with changes:</b> <a href='?_src_=prefs;preference=update_anthro_colors;task=input'>[update_anthro_colors ? "Yes" : "No"]</a><BR>"
-
 	var/use_skintones = pref_species.use_skintones
 	if(use_skintones)
 
@@ -432,6 +429,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		dat += "<b>[skin_tone_wording]: </b><a href='?_src_=prefs;preference=s_tone;task=input'>Change </a>"
 		//dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 		dat += "<br>"
+		if(MUTCOLOR in pref_species.species_traits)
+			dat += "<b>Update feature colors with changes:</b> <a href='?_src_=prefs;preference=update_anthro_colors;task=input'>[update_anthro_colors ? "Yes" : "No"]</a><BR>"
+
 
 	dat += "<br>"
 	dat += "<b>Voice Type:</b> <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a>"
