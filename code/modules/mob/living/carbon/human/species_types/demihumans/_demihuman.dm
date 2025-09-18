@@ -110,6 +110,23 @@
 		/datum/bodypart_feature/hair/head,
 		/datum/bodypart_feature/hair/facial,
 	)
+	body_marking_sets = list(
+		/datum/body_marking_set/none,
+		/datum/body_marking_set/belly,
+		/datum/body_marking_set/socks,
+		/datum/body_marking_set/tiger,
+		/datum/body_marking_set/tiger_dark,
+	)
+	body_markings = list(
+		/datum/body_marking/flushed_cheeks,
+		/datum/body_marking/eyeliner,
+		/datum/body_marking/tonage,
+		/datum/body_marking/socklonger,
+		/datum/body_marking/tips,
+		/datum/body_marking/nose,
+		/datum/body_marking/bangs,
+		/datum/body_marking/bun,
+	)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
 		/datum/customizer/bodypart_feature/hair/head/humanoid,

@@ -443,7 +443,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<br><b>ERP:</b> <a href='?_src_=prefs;preference=erp;task=menu'>Change</a>"
 	if(length(pref_species.descriptor_choices))
 		dat += "<br><b>Descriptors:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>Change</a>"
-		dat += "<br>"
+	if(length(pref_species.body_markings) || length(pref_species.body_marking_sets))
+		dat += "<br><b>Body Markings:</b> <a href='?_src_=prefs;preference=markings;task=menu'>Change</a>"
+	dat += "<br>"
 
 	dat += "<br><b>Headshot:</b> <a href='?_src_=prefs;preference=headshot;task=input'>Change</a>"
 	if(headshot_link != null)

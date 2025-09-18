@@ -427,6 +427,16 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			return (human.gender == MALE)
 	return TRUE
 
+/datum/species/proc/add_marking_sets_to_markings()
+	if(!body_marking_sets)
+		return
+	if(!body_markings)
+		body_markings = list()
+	var/datum/body_marking_set/bodyset
+	for(var/set_type in body_marking_sets)
+		bodyset = GLOB.body_marking_sets_by_type[set_type]
+		for(var/body_marking_type in bodyset.body_marking_list)
+			body_markings |= body_marking_type
 
 /datum/species/New()
 
@@ -652,6 +662,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		H.dna.real_name = H.real_name
 		var/list/features = random_features()
 		H.dna.features = features.Copy()
+		H.dna.body_markings = get_random_body_markings(H.dna.features)
 	validate_customizer_entries(H)
 	reset_all_customizer_accessory_colors(H)
 	randomize_all_customizer_accessories(H)
@@ -755,6 +766,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	C.mob_biotypes = inherent_biotypes
 
 	regenerate_organs(C,old_species, pref_load=pref_load)
+
+	if(ishuman(C))
+		apply_markings_to_body_parts(C.dna.body_markings, C)
 
 	if(exotic_bloodtype && C.dna.human_blood_type != exotic_bloodtype)
 		C.dna.human_blood_type = exotic_bloodtype
@@ -2360,6 +2374,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 /datum/species/proc/ExtinguishMob(mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/get_random_body_markings(list/features) //Needs features to base the colour off of
+	return list()
 
 ////////////
 //  Stun  //
