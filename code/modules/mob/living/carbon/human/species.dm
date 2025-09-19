@@ -439,7 +439,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			body_markings |= body_marking_type
 
 /datum/species/New()
-
+	add_marking_sets_to_markings()
 	if(!limbs_id)	//if we havent set a limbs id to use, just use our own id
 		limbs_id = name
 	..()
@@ -767,9 +767,6 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 	regenerate_organs(C,old_species, pref_load=pref_load)
 
-	if(ishuman(C))
-		apply_markings_to_body_parts(C.dna.body_markings, C)
-
 	if(exotic_bloodtype && C.dna.human_blood_type != exotic_bloodtype)
 		C.dna.human_blood_type = exotic_bloodtype
 
@@ -827,8 +824,10 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(pref_load)
 		pref_load.apply_customizers_to_character(C)
 		pref_load.apply_descriptors(C)
+		pref_load.apply_body_markings(C)
 	else
 		apply_customizers_to_character(C)
+		apply_markings_to_body_parts(C.dna.body_markings, C)
 
 	SEND_SIGNAL(C, COMSIG_SPECIES_GAIN, src, old_species)
 
