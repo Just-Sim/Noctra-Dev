@@ -115,6 +115,7 @@
 	SPEC_ID_HARPY,\
 	SPEC_ID_TRITON,\
 	SPEC_ID_MEDICATOR,\
+	SPEC_ID_HOLLOWKIN,\
 )
 
 /// Species who are non-exotic to Vanderlin. These are species from foreign lands with no local pull or uncommon species. Used in miscellaneous cases, when they would not be that role.
@@ -246,7 +247,6 @@
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_KOBOLD,\
 	SPEC_ID_RAKSHARI,\
-	SPEC_ID_HOLLOWKIN,\
 )
 
 /// Species that use the base human body, adjusted or otherwise
