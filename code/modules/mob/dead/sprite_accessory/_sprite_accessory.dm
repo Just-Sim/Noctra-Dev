@@ -238,6 +238,8 @@
 			return "BEHIND"
 		if(BODY_UNDER_LAYER)
 			return "UNDER"
+		if(BODY_LAYER)
+			return "BODY"
 		else
 			CRASH("Tried to get an unimplemented layer suffix for sprite accessory of type [type]")
 
