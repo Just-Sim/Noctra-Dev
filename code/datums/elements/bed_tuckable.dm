@@ -50,7 +50,7 @@
 		tucked.transform = turn(tucked.transform, rotation_degree)
 		RegisterSignal(tucked, COMSIG_ITEM_PICKUP, PROC_REF(untuck))
 
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+	return COMPONENT_NO_AFTERATTACK
 
 /**
  * If we rotate our object, then we need to un-rotate it when it's picked up
