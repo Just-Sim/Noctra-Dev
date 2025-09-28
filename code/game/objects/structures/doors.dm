@@ -159,7 +159,7 @@
 		to_chat(user, span_warning("I claw at [src]"))
 		take_damage(40, BRUTE, BCLASS_CUT, TRUE)
 		return
-	if(isliving(user) && world.time > last_bump + 20)
+	if(isliving(user) && world.time > last_bump + 1 SECONDS)
 		last_bump = world.time
 		var/mob/living/L = user
 		if(L.m_intent == MOVE_INTENT_SNEAK)
@@ -224,7 +224,7 @@
 	. = ..()
 	if(obj_broken || switching_states)
 		return
-	if(world.time < last_bump + 20)
+	if(world.time < last_bump + 1 SECONDS)
 		return
 	last_bump = world.time
 	if(ismob(AM))
