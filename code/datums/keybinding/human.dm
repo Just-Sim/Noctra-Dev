@@ -26,7 +26,7 @@
 /datum/keybinding/human/quick_equipbelt/down(client/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
-	if(do_after(H, CLICK_CD_MELEE, H))
+	if(do_after(H, 6, H)) // 0.6 second delay
 		H.smart_equipbelt()
 	return TRUE
 
@@ -39,7 +39,7 @@
 /datum/keybinding/human/bag_equip_backl/down(client/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
-	if(do_after(H, CLICK_CD_MELEE, H))
+	if(do_after(H, 6, H)) // 0.6 second delay
 		H.smart_equipbag(ITEM_SLOT_BACK_R) // These fucking shits are reversed in the UI, so keep it like this for symmetry
 	return TRUE
 
@@ -52,7 +52,7 @@
 /datum/keybinding/human/bag_equip_backr/down(client/user)
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
-	if(do_after(H, CLICK_CD_MELEE, H))
+	if(do_after(H, 6, H)) // 0.6 second delay
 		H.smart_equipbag(ITEM_SLOT_BACK_L) // These fucking shits are reversed in the UI, so keep it like this for symmetry
 	return TRUE
 
