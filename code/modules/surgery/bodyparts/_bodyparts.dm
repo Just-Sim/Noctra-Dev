@@ -597,8 +597,6 @@
 			skin_tone = H.skin_tone
 			should_draw_greyscale = TRUE
 			// Handle custom skin color
-			if(skin_tone == SKIN_COLOR_CUSTOM)
-				skin_tone = H.custom_skin_color
 		else
 			skin_tone = ""
 

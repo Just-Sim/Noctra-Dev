@@ -112,9 +112,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	/// Skin color.
 	var/skin_tone = "caucasian1"
 
-	/// Custom skin color (used when skin_tone is "Custom").
-	var/custom_skin_color = "#ffe0d1"
-
 	/// Eye color.
 	var/eye_color = "000"
 
@@ -1279,9 +1276,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						skin_tone = listy[new_s_tone]
 						// If custom is selected, show color picker
 						if(skin_tone == SKIN_COLOR_CUSTOM)
-							var/new_custom_color = color_pick_sanitized_lumi(user, "Choose your custom skin color:", "Custom Skin Color", custom_skin_color)
+							var/new_custom_color = color_pick_sanitized_lumi(user, "Choose your custom skin color:", "Custom Skin Color", skin_tone)
 							if(new_custom_color)
-								custom_skin_color = new_custom_color // sanitize_hexcolor is done in the color_pick_sanitized_lumi proc so we ballin
+								skin_tone = new_custom_color // sanitize_hexcolor is done in the color_pick_sanitized_lumi proc so we ballin
 								try_update_anthro_colors()
 
 				if("selected_accent")
@@ -1664,7 +1661,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		organ_eyes.old_eye_color = eye_color
 
 	character.skin_tone = skin_tone
-	character.custom_skin_color = custom_skin_color
 	character.underwear = underwear
 	character.undershirt = undershirt
 	character.detail = detail
