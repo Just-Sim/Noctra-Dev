@@ -103,6 +103,7 @@
 	SPEC_ID_AASIMAR,\
 	SPEC_ID_ELF,\
 	SPEC_ID_HALF_ELF,\
+	SPEC_ID_HOLLOWKIN, \
 )
 
 /// Species who are nonheretical to the church. Excluded species typically have an inhumen god associated, like Zizo. Used for church/faith roles.
@@ -150,7 +151,7 @@
 	SPEC_ID_AASIMAR,\
 )
 
-/// Races who are affiliated with Zaladin
+/// Species who are affiliated with Zaladin
 #define RACES_PLAYER_ZALADIN list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_RAKSHARI,\
